@@ -1,9 +1,13 @@
 ```python
 import customtkinter as ctk
 from assistant import Assistant
+from speech import SpeechManager
 
 
-# Appearance
+# =========================
+# APPEARANCE
+# =========================
+
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
@@ -12,16 +16,25 @@ class AIAssistantGUI:
 
     def __init__(self):
 
+        # Main window
         self.root = ctk.CTk()
 
         self.root.title("AI Virtual Assistant")
         self.root.geometry("1100x700")
         self.root.resizable(False, False)
 
-        # Assistant controller
+        # Assistant
         self.assistant = Assistant()
 
+        # Speech system
+        self.speech = SpeechManager()
+
+        # Create GUI
         self.create_widgets()
+
+    # =========================
+    # CREATE GUI
+    # =========================
 
     def create_widgets(self):
 
@@ -55,21 +68,27 @@ class AIAssistantGUI:
             "AI: How can I help you today?\n\n"
         )
 
-        # Input box
+        # =========================
+        # INPUT BOX
+        # =========================
+
         self.entry = ctk.CTkEntry(
             self.root,
-            width=800,
+            width=620,
             height=45,
             placeholder_text="Type your message..."
         )
 
         self.entry.pack(
             side="left",
-            padx=(70, 10),
+            padx=(50, 10),
             pady=15
         )
 
-        # Send button
+        # =========================
+        # SEND BUTTON
+        # =========================
+
         self.send_button = ctk.CTkButton(
             self.root,
             text="SEND",
@@ -80,6 +99,25 @@ class AIAssistantGUI:
 
         self.send_button.pack(
             side="left",
+            padx=5,
+            pady=15
+        )
+
+        # =========================
+        # VOICE BUTTON
+        # =========================
+
+        self.voice_button = ctk.CTkButton(
+            self.root,
+            text="🎤 VOICE",
+            width=120,
+            height=45,
+            command=self.voice_message
+        )
+
+        self.voice_button.pack(
+            side="left",
+            padx=5,
             pady=15
         )
 
@@ -88,6 +126,10 @@ class AIAssistantGUI:
             "<Return>",
             lambda event: self.send_message()
         )
+
+    # =========================
+    # SEND MESSAGE
+    # =========================
 
     def send_message(self):
 
@@ -102,7 +144,7 @@ class AIAssistantGUI:
             f"You: {message}\n"
         )
 
-        # Send to Assistant
+        # Get AI response
         response = self.assistant.process_message(
             message
         )
@@ -113,16 +155,76 @@ class AIAssistantGUI:
             f"AI: {response}\n\n"
         )
 
+        # Speak AI response
+        self.speech.speak(
+            response
+        )
+
         # Clear input
         self.entry.delete(
             0,
             "end"
         )
 
-        # Scroll down
+        # Scroll to bottom
         self.chat_box.see(
             "end"
         )
+
+    # =========================
+    # VOICE MESSAGE
+    # =========================
+
+    def voice_message(self):
+
+        self.chat_box.insert(
+            "end",
+            "System: Listening... 🎤\n"
+        )
+
+        self.root.update()
+
+        # Listen
+        message = self.speech.listen()
+
+        if message:
+
+            # Show recognized message
+            self.chat_box.insert(
+                "end",
+                f"You: {message}\n"
+            )
+
+            # Get response
+            response = self.assistant.process_message(
+                message
+            )
+
+            # Show response
+            self.chat_box.insert(
+                "end",
+                f"AI: {response}\n\n"
+            )
+
+            # Speak response
+            self.speech.speak(
+                response
+            )
+
+        else:
+
+            self.chat_box.insert(
+                "end",
+                "System: Sorry, I couldn't understand you.\n\n"
+            )
+
+        self.chat_box.see(
+            "end"
+        )
+
+    # =========================
+    # RUN
+    # =========================
 
     def run(self):
 
