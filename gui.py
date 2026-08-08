@@ -1,5 +1,5 @@
 import customtkinter as ctk
-
+from ai_chat import AIChat
 
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
@@ -9,6 +9,7 @@ class AIAssistantGUI:
 
     def __init__(self):
         self.root = ctk.CTk()
+        self.ai = AIChat()
 
         self.root.title("AI Virtual Assistant")
         self.root.geometry("1100x700")
@@ -72,7 +73,7 @@ class AIAssistantGUI:
             f"You: {message}\n"
         )
 
-        response = self.get_response(message)
+        response = self.ai.get_response(message)
 
         self.chat_box.insert(
             "end",
