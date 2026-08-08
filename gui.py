@@ -1,6 +1,9 @@
+```python
 import customtkinter as ctk
-from ai_chat import AIChat
+from assistant import Assistant
 
+
+# Appearance
 ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
@@ -8,45 +11,65 @@ ctk.set_default_color_theme("blue")
 class AIAssistantGUI:
 
     def __init__(self):
+
         self.root = ctk.CTk()
-        self.ai = AIChat()
 
         self.root.title("AI Virtual Assistant")
         self.root.geometry("1100x700")
         self.root.resizable(False, False)
 
+        # Assistant controller
+        self.assistant = Assistant()
+
         self.create_widgets()
 
     def create_widgets(self):
 
+        # Title
         self.title_label = ctk.CTkLabel(
             self.root,
-            text="AI Virtual Assistant",
+            text="🤖 AI Virtual Assistant",
             font=("Arial", 28, "bold")
         )
-        self.title_label.pack(pady=25)
 
+        self.title_label.pack(
+            pady=25
+        )
+
+        # Chat box
         self.chat_box = ctk.CTkTextbox(
             self.root,
             width=950,
             height=500,
             font=("Arial", 16)
         )
-        self.chat_box.pack(pady=10)
 
-        self.chat_box.insert(
-            "end",
-            "AI: Hello! I am your AI Virtual Assistant.\n\n"
+        self.chat_box.pack(
+            pady=10
         )
 
+        # Welcome message
+        self.chat_box.insert(
+            "end",
+            "AI: Hello! I am your AI Virtual Assistant.\n"
+            "AI: How can I help you today?\n\n"
+        )
+
+        # Input box
         self.entry = ctk.CTkEntry(
             self.root,
             width=800,
             height=45,
             placeholder_text="Type your message..."
         )
-        self.entry.pack(side="left", padx=(70, 10), pady=15)
 
+        self.entry.pack(
+            side="left",
+            padx=(70, 10),
+            pady=15
+        )
+
+        # Send button
         self.send_button = ctk.CTkButton(
             self.root,
             text="SEND",
@@ -54,8 +77,13 @@ class AIAssistantGUI:
             height=45,
             command=self.send_message
         )
-        self.send_button.pack(side="left", pady=15)
 
+        self.send_button.pack(
+            side="left",
+            pady=15
+        )
+
+        # Enter key
         self.entry.bind(
             "<Return>",
             lambda event: self.send_message()
@@ -68,38 +96,35 @@ class AIAssistantGUI:
         if message == "":
             return
 
+        # Show user message
         self.chat_box.insert(
             "end",
             f"You: {message}\n"
         )
 
-        response = self.ai.get_response(message)
+        # Send to Assistant
+        response = self.assistant.process_message(
+            message
+        )
 
+        # Show AI response
         self.chat_box.insert(
             "end",
             f"AI: {response}\n\n"
         )
 
-        self.entry.delete(0, "end")
-        self.chat_box.see("end")
+        # Clear input
+        self.entry.delete(
+            0,
+            "end"
+        )
 
-    def get_response(self, message):
-
-        message = message.lower()
-
-        if "hello" in message or "hi" in message:
-            return "Hello Guru! How can I help you?"
-
-        if "python" in message:
-            return "Python is a powerful programming language."
-
-        if "name" in message:
-            return "I am your AI Virtual Assistant."
-
-        if "bye" in message:
-            return "Goodbye Guru!"
-
-        return "I received your message. More AI features can be added later."
+        # Scroll down
+        self.chat_box.see(
+            "end"
+        )
 
     def run(self):
+
         self.root.mainloop()
+```
