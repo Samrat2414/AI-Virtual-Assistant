@@ -1,176 +1,104 @@
 import customtkinter as ctk
 
 
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
+
+
 class AIAssistantGUI:
 
     def __init__(self):
-        # Main window
         self.root = ctk.CTk()
+
         self.root.title("AI Virtual Assistant")
         self.root.geometry("1100x700")
         self.root.resizable(False, False)
-
-        # Theme
-        ctk.set_appearance_mode("dark")
-        ctk.set_default_color_theme("blue")
 
         self.create_widgets()
 
     def create_widgets(self):
 
-        # ==============================
-        # TITLE
-        # ==============================
-
-        title = ctk.CTkLabel(
+        self.title_label = ctk.CTkLabel(
             self.root,
-            text="🤖 AI Virtual Assistant",
-            font=("Arial", 30, "bold")
+            text="AI Virtual Assistant",
+            font=("Arial", 28, "bold")
         )
-        title.pack(pady=(20, 5))
-
-        # ==============================
-        # STATUS
-        # ==============================
-
-        self.status_label = ctk.CTkLabel(
-            self.root,
-            text="🟢 Status: Ready",
-            font=("Arial", 15)
-        )
-        self.status_label.pack(pady=5)
-
-        # ==============================
-        # CHAT BOX
-        # ==============================
+        self.title_label.pack(pady=25)
 
         self.chat_box = ctk.CTkTextbox(
             self.root,
             width=950,
-            height=450,
-            font=("Arial", 16),
-            corner_radius=15
+            height=500,
+            font=("Arial", 16)
         )
-        self.chat_box.pack(pady=15)
+        self.chat_box.pack(pady=10)
 
         self.chat_box.insert(
             "end",
-            "🤖 AI Assistant: Hello! How can I help you today?\n\n"
+            "AI: Hello! I am your AI Virtual Assistant.\n\n"
         )
 
-        # ==============================
-        # INPUT FRAME
-        # ==============================
-
-        input_frame = ctk.CTkFrame(
+        self.entry = ctk.CTkEntry(
             self.root,
-            corner_radius=15
-        )
-        input_frame.pack(
-            padx=20,
-            pady=10,
-            fill="x"
-        )
-
-        # ==============================
-        # MESSAGE INPUT
-        # ==============================
-
-        self.message_entry = ctk.CTkEntry(
-            input_frame,
-            width=700,
+            width=800,
             height=45,
-            placeholder_text="Type your message...",
-            font=("Arial", 15)
+            placeholder_text="Type your message..."
         )
-        self.message_entry.pack(
-            side="left",
-            padx=15,
-            pady=12
-        )
+        self.entry.pack(side="left", padx=(70, 10), pady=15)
 
-        # ==============================
-        # SEND BUTTON
-        # ==============================
-
-        send_button = ctk.CTkButton(
-            input_frame,
-            text="Send",
-            width=90,
+        self.send_button = ctk.CTkButton(
+            self.root,
+            text="SEND",
+            width=120,
             height=45,
             command=self.send_message
         )
-        send_button.pack(
-            side="left",
-            padx=5
-        )
+        self.send_button.pack(side="left", pady=15)
 
-        # ==============================
-        # MICROPHONE BUTTON
-        # ==============================
-
-        mic_button = ctk.CTkButton(
-            input_frame,
-            text="🎤",
-            width=60,
-            height=45,
-            command=self.microphone_clicked
-        )
-        mic_button.pack(
-            side="left",
-            padx=5
-        )
-
-        # Press ENTER to send
-        self.message_entry.bind(
+        self.entry.bind(
             "<Return>",
             lambda event: self.send_message()
         )
 
-    # ==============================
-    # SEND MESSAGE
-    # ==============================
-
     def send_message(self):
 
-        message = self.message_entry.get().strip()
+        message = self.entry.get().strip()
 
-        if message:
-
-            self.chat_box.insert(
-                "end",
-                f"👤 You: {message}\n"
-            )
-
-            self.chat_box.insert(
-                "end",
-                "🤖 Assistant: I received your message. AI features coming soon!\n\n"
-            )
-
-            self.message_entry.delete(0, "end")
-
-            self.chat_box.see("end")
-
-    # ==============================
-    # MICROPHONE
-    # ==============================
-
-    def microphone_clicked(self):
-
-        self.status_label.configure(
-            text="🎤 Status: Listening..."
-        )
+        if message == "":
+            return
 
         self.chat_box.insert(
             "end",
-            "🎤 Assistant: Voice recognition will be added in Step 4.\n\n"
+            f"You: {message}\n"
         )
 
+        response = self.get_response(message)
+
+        self.chat_box.insert(
+            "end",
+            f"AI: {response}\n\n"
+        )
+
+        self.entry.delete(0, "end")
         self.chat_box.see("end")
 
-    # ==============================
-    # RUN APPLICATION
-    # ==============================
+    def get_response(self, message):
+
+        message = message.lower()
+
+        if "hello" in message or "hi" in message:
+            return "Hello Guru! How can I help you?"
+
+        if "python" in message:
+            return "Python is a powerful programming language."
+
+        if "name" in message:
+            return "I am your AI Virtual Assistant."
+
+        if "bye" in message:
+            return "Goodbye Guru!"
+
+        return "I received your message. More AI features can be added later."
 
     def run(self):
         self.root.mainloop()
