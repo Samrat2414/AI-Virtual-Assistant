@@ -1,51 +1,46 @@
 # 🤖 AI Virtual Assistant
 
-A Python-based AI Virtual Assistant with a modern CustomTkinter GUI.
+A Python-based AI Virtual Assistant with a modern desktop GUI, voice interaction, AI chat, automation, weather information, notes, reminders, and user authentication.
 
 ## ✨ Features
 
 - 🤖 AI Chat
-- 💬 Graphical Chat Interface
-- 🎤 Voice Input
-- 🔊 Voice Response
-- 🔐 User Login & Registration
-- 📝 Notes Management
-- ⏰ Reminders
+- 🎙️ Voice Recognition
+- 🔊 Text-to-Speech
+- 🖥️ Modern CustomTkinter GUI
 - 🌦️ Weather Information
-- 💻 PC Automation
-- 🔎 Google Search
-- 💾 SQLite Database
-- ⚙️ Application Settings
+- 📝 Notes
+- ⏰ Reminders
+- ⚙️ Settings
+- 🔐 User Login
+- 💻 Desktop Automation
 
 ## 🛠️ Technologies
 
-- Python 3.13
+- Python
 - CustomTkinter
 - SpeechRecognition
 - PyAudio
 - pyttsx3
-- SQLite
-- Open-Meteo Weather API
 
-## 📁 Project Structure
+## 📂 Project Structure
 
 ```text
 AI-Virtual-Assistant/
-│
 ├── main.py
 ├── gui.py
-├── ai_chat.py
 ├── assistant.py
-├── speech.py
+├── ai_chat.py
 ├── commands.py
 ├── automation.py
-├── database.py
-├── notes.py
-├── reminder.py
 ├── weather.py
+├── database.py
 ├── login.py
 ├── login_gui.py
+├── notes.py
+├── reminder.py
 ├── settings.py
+├── speech.py
 ├── config.py
 ├── utils.py
 ├── requirements.txt
