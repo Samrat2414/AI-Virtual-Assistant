@@ -1,43 +1,42 @@
 import customtkinter as ctk
+
 from assistant import Assistant
 from speech import SpeechManager
-
-
-# =========================
-# APPEARANCE
-# =========================
-
-ctk.set_appearance_mode("dark")
-ctk.set_default_color_theme("blue")
+from settings import SettingsManager
 
 
 class AIAssistantGUI:
 
     def __init__(self):
 
-        # Main window
+        self.settings = SettingsManager()
+
+        # Appearance
+        ctk.set_appearance_mode(
+            self.settings.get("appearance")
+        )
+        ctk.set_default_color_theme("blue")
+
         self.root = ctk.CTk()
 
-        self.root.title("AI Virtual Assistant")
+        self.root.title(
+            self.settings.get("assistant_name")
+        )
+
         self.root.geometry("1100x700")
         self.root.resizable(False, False)
 
-        # Assistant
         self.assistant = Assistant()
-
-        # Speech system
         self.speech = SpeechManager()
 
-        # Create GUI
         self.create_widgets()
-
-    # =========================
-    # CREATE GUI
-    # =========================
 
     def create_widgets(self):
 
-        # Title
+        # =========================
+        # TITLE
+        # =========================
+
         self.title_label = ctk.CTkLabel(
             self.root,
             text="🤖 AI Virtual Assistant",
@@ -48,7 +47,10 @@ class AIAssistantGUI:
             pady=25
         )
 
-        # Chat box
+        # =========================
+        # CHAT BOX
+        # =========================
+
         self.chat_box = ctk.CTkTextbox(
             self.root,
             width=950,
@@ -60,7 +62,6 @@ class AIAssistantGUI:
             pady=10
         )
 
-        # Welcome message
         self.chat_box.insert(
             "end",
             "AI: Hello! I am your AI Virtual Assistant.\n"
@@ -68,12 +69,12 @@ class AIAssistantGUI:
         )
 
         # =========================
-        # INPUT BOX
+        # INPUT
         # =========================
 
         self.entry = ctk.CTkEntry(
             self.root,
-            width=620,
+            width=600,
             height=45,
             placeholder_text="Type your message..."
         )
@@ -85,7 +86,7 @@ class AIAssistantGUI:
         )
 
         # =========================
-        # SEND BUTTON
+        # SEND
         # =========================
 
         self.send_button = ctk.CTkButton(
@@ -103,7 +104,7 @@ class AIAssistantGUI:
         )
 
         # =========================
-        # VOICE BUTTON
+        # VOICE
         # =========================
 
         self.voice_button = ctk.CTkButton(
@@ -134,38 +135,31 @@ class AIAssistantGUI:
 
         message = self.entry.get().strip()
 
-        if message == "":
+        if not message:
             return
 
-        # Show user message
         self.chat_box.insert(
             "end",
             f"You: {message}\n"
         )
 
-        # Get AI response
         response = self.assistant.process_message(
             message
         )
 
-        # Show AI response
         self.chat_box.insert(
             "end",
             f"AI: {response}\n\n"
         )
 
-        # Speak AI response
-        self.speech.speak(
-            response
-        )
+        if self.settings.get("voice_enabled"):
+            self.speech.speak(response)
 
-        # Clear input
         self.entry.delete(
             0,
             "end"
         )
 
-        # Scroll to bottom
         self.chat_box.see(
             "end"
         )
@@ -183,32 +177,26 @@ class AIAssistantGUI:
 
         self.root.update()
 
-        # Listen
         message = self.speech.listen()
 
         if message:
 
-            # Show recognized message
             self.chat_box.insert(
                 "end",
                 f"You: {message}\n"
             )
 
-            # Get response
             response = self.assistant.process_message(
                 message
             )
 
-            # Show response
             self.chat_box.insert(
                 "end",
                 f"AI: {response}\n\n"
             )
 
-            # Speak response
-            self.speech.speak(
-                response
-            )
+            if self.settings.get("voice_enabled"):
+                self.speech.speak(response)
 
         else:
 
@@ -228,4 +216,3 @@ class AIAssistantGUI:
     def run(self):
 
         self.root.mainloop()
-```
