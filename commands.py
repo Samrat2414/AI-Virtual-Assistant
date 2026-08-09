@@ -1,6 +1,10 @@
+```python
 import datetime
+import re
+
 from automation import AutomationManager
 from notes import NotesManager
+from reminder import ReminderManager
 
 
 class CommandManager:
@@ -8,13 +12,14 @@ class CommandManager:
     def __init__(self):
         self.automation = AutomationManager()
         self.notes = NotesManager()
+        self.reminders = ReminderManager()
 
     def execute(self, message):
 
         command = message.lower().strip()
 
         # =========================
-        # AUTOMATION COMMANDS
+        # AUTOMATION
         # =========================
 
         if "open chrome" in command:
@@ -38,11 +43,9 @@ class CommandManager:
 
         if command.startswith("search google for "):
 
-            query = command.replace(
-                "search google for ",
-                "",
-                1
-            ).strip()
+            query = message[
+                len("search google for "):
+            ].strip()
 
             if query:
                 return self.automation.google_search(query)
@@ -65,7 +68,9 @@ class CommandManager:
 
         if command.startswith("add note "):
 
-            note = message[len("add note "):].strip()
+            note = message[
+                len("add note "):
+            ].strip()
 
             if note:
                 return self.notes.add_note(note)
@@ -76,20 +81,63 @@ class CommandManager:
         # SHOW NOTES
         # =========================
 
-        if command == "show notes" or command == "show my notes":
-
+        if command in ["show notes", "show my notes"]:
             return self.notes.get_notes()
 
         # =========================
         # CLEAR NOTES
         # =========================
 
-        if command == "clear notes" or command == "delete notes":
-
+        if command in ["clear notes", "delete notes"]:
             return self.notes.clear_notes()
+
+        # =========================
+        # ADD REMINDER
+        # =========================
+
+        reminder_match = re.search(
+            r"remind me in (\d+)\s*(second|seconds|minute|minutes)\s*(.*)",
+            command
+        )
+
+        if reminder_match:
+
+            amount = int(
+                reminder_match.group(1)
+            )
+
+            unit = reminder_match.group(2)
+
+            reminder_message = (
+                reminder_match.group(3).strip()
+            )
+
+            if not reminder_message:
+                reminder_message = "Your reminder."
+
+            if "minute" in unit:
+                seconds = amount * 60
+            else:
+                seconds = amount
+
+            return self.reminders.add_reminder(
+                reminder_message,
+                seconds
+            )
+
+        # =========================
+        # SHOW REMINDERS
+        # =========================
+
+        if command in [
+            "show reminders",
+            "show my reminders"
+        ]:
+            return self.reminders.get_reminders()
 
         # =========================
         # NO COMMAND
         # =========================
 
         return None
+```
