@@ -1,1 +1,41 @@
+__pycache__/
+*.py[cod]
+*$py.class
 
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Local database
+*.db
+*.sqlite
+*.sqlite3
+
+# Local settings
+settings.json
+
+# Environment variables / secrets
+.env
+.env.*
+*.key
+*.pem
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
