@@ -45,3 +45,10 @@ AI-Virtual-Assistant/
 ├── utils.py
 ├── requirements.txt
 └── README.md
+## 🚀 Installation
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Samrat2414/AI-Virtual-Assistant.git
+cd AI-Virtual-Assistant
