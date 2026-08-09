@@ -81,7 +81,17 @@ py -3.13 -m pip install -r requirements.txt
 
 ## 📸 Screenshots
 
-![AI Virtual Assistant](screenshots/assistant.png)
+### 🖥️ Login GUI
+
+![Login GUI](screenshots/Screenshot%202026-08-09%20233544.png)
+
+### 🖥️ AI Virtual Assistant
+
+![AI Virtual Assistant](screenshots/Screenshot%202026-08-10%20001847.png)
+
+### 🖥️ Assistant Interface
+
+![Assistant Interface](screenshots/Screenshot%202026-08-10%20001944.png)
 
 ## 📄 License
 
