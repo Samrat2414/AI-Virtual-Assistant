@@ -5,21 +5,24 @@ import re
 from automation import AutomationManager
 from notes import NotesManager
 from reminder import ReminderManager
+from weather import WeatherManager
 
 
 class CommandManager:
 
     def __init__(self):
+
         self.automation = AutomationManager()
         self.notes = NotesManager()
         self.reminders = ReminderManager()
+        self.weather = WeatherManager()
 
     def execute(self, message):
 
         command = message.lower().strip()
 
         # =========================
-        # AUTOMATION
+        # AUTOMATION COMMANDS
         # =========================
 
         if "open chrome" in command:
@@ -50,17 +53,37 @@ class CommandManager:
             if query:
                 return self.automation.google_search(query)
 
+            return "Please tell me what you want to search."
+
         # =========================
         # TIME
         # =========================
 
-        if "what time" in command or "current time" in command:
+        if (
+            "what time" in command
+            or "current time" in command
+        ):
 
             current_time = datetime.datetime.now().strftime(
                 "%I:%M %p"
             )
 
             return f"The current time is {current_time}."
+
+        # =========================
+        # WEATHER
+        # =========================
+
+        if command.startswith("weather in "):
+
+            city = message[
+                len("weather in "):
+            ].strip()
+
+            if city:
+                return self.weather.get_weather(city)
+
+            return "Please tell me the city name."
 
         # =========================
         # ADD NOTE
@@ -81,14 +104,22 @@ class CommandManager:
         # SHOW NOTES
         # =========================
 
-        if command in ["show notes", "show my notes"]:
+        if command in [
+            "show notes",
+            "show my notes"
+        ]:
+
             return self.notes.get_notes()
 
         # =========================
         # CLEAR NOTES
         # =========================
 
-        if command in ["clear notes", "delete notes"]:
+        if command in [
+            "clear notes",
+            "delete notes"
+        ]:
+
             return self.notes.clear_notes()
 
         # =========================
@@ -96,7 +127,8 @@ class CommandManager:
         # =========================
 
         reminder_match = re.search(
-            r"remind me in (\d+)\s*(second|seconds|minute|minutes)\s*(.*)",
+            r"remind me in (\d+)\s*"
+            r"(second|seconds|minute|minutes)\s*(.*)",
             command
         )
 
@@ -133,10 +165,11 @@ class CommandManager:
             "show reminders",
             "show my reminders"
         ]:
+
             return self.reminders.get_reminders()
 
         # =========================
-        # NO COMMAND
+        # NO COMMAND FOUND
         # =========================
 
         return None
