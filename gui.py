@@ -1,4 +1,3 @@
-```python
 import customtkinter as ctk
 from assistant import Assistant
 from speech import SpeechManager
