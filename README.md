@@ -1,75 +1,35 @@
 # 🤖 AI Virtual Assistant
 
-A Python-based AI Virtual Assistant with a modern graphical user interface, voice recognition, and text-to-speech capabilities.
+A Python-based AI Virtual Assistant with a modern graphical user interface, login system, voice interaction, automation, notes, reminders, weather information, and AI chat functionality.
 
 ## ✨ Features
 
-* 🎙️ Voice Recognition
+* 🔐 User Login Interface
+* 🤖 AI Chat Assistant
+* 🎤 Voice Input
 * 🔊 Text-to-Speech
-* 🖥️ Modern GUI using CustomTkinter
-* 🎤 Microphone Support
-* ⚡ Fast and Simple Interface
-* 🐍 Built with Python
+* 🖥️ Modern CustomTkinter GUI
+* ⚙️ Computer Automation Commands
+* 📝 Notes Management
+* ⏰ Reminder System
+* 🌤️ Weather Information
+* 💾 Local Database
+* ⚙️ Settings Management
+* 📁 Organized project structure
 
-## 🚀 Installation
+## 📸 Screenshots
 
-### 1. Clone the Repository
+### 🔐 Login Interface
 
-```bash
-git clone https://github.com/Samrat2414/AI-Virtual-Assistant.git
-cd AI-Virtual-Assistant
-```
+![Login Interface](screenshots/SCREENSHOOT%201.png)
 
-### 2. Install Dependencies
+### 🤖 AI Assistant Interface
 
-Python 3.13 is recommended for this project.
+![AI Assistant Interface](screenshots/SCREENSHOOT%202.png)
 
-```bash
-py -3.13 -m pip install -r requirements.txt
-```
+### ⚙️ Assistant in Action
 
-### 3. Run the Project
-
-```bash
-py -3.13 main.py
-```
-
-## 🎤 Manage Commands
-
-| Command         | Action                 |
-| --------------- | ---------------------- |
-| `Hello`         | Greets the user        |
-| `Time`          | Shows the current time |
-| `Date`          | Shows the current date |
-| `Open Google`   | Opens Google           |
-| `Open YouTube`  | Opens YouTube          |
-| `Search`        | Performs a web search  |
-| `Exit` / `Quit` | Closes the assistant   |
-
-> **Note:** Available commands depend on the functions implemented in the project.
-
-## 📦 Requirements
-
-* Python 3.13
-* CustomTkinter
-* SpeechRecognition
-* PyAudio
-* pyttsx3
-
-Install all dependencies with:
-
-```bash
-py -3.13 -m pip install -r requirements.txt
-```
-
-## 🖥️ Usage
-
-1. Clone the repository.
-2. Install Python 3.13.
-3. Install the required dependencies.
-4. Connect a working microphone.
-5. Run `main.py`.
-6. Use the GUI to interact with the AI Virtual Assistant.
+![Assistant in Action](screenshots/SCREENSHOOT%203.png)
 
 ## 🛠️ Technologies Used
 
@@ -78,33 +38,88 @@ py -3.13 -m pip install -r requirements.txt
 * SpeechRecognition
 * PyAudio
 * pyttsx3
+* SQLite
+* Git & GitHub
 
-## 📸 Screenshots
+## 📂 Project Structure
 
-### 🖥️ Login GUI
+```text
+AI-Virtual-Assistant/
+│
+├── assets/
+│   └── logo.png
+├── data/
+├── icons/
+├── logs/
+├── models/
+├── sounds/
+├── screenshots/
+│   ├── SCREENSHOOT 1.png
+│   ├── SCREENSHOOT 2.png
+│   └── SCREENSHOOT 3.png
+│
+├── ai_chat.py
+├── assistant.py
+├── automation.py
+├── commands.py
+├── config.py
+├── database.py
+├── gui.py
+├── login.py
+├── login_gui.py
+├── main.py
+├── notes.py
+├── reminder.py
+├── settings.py
+├── speech.py
+├── utils.py
+├── weather.py
+├── requirements.txt
+├── LICENSE
+└── README.md
+```
 
-![Login GUI](screenshots/Screenshot%202026-08-09%20233544.png)
+## 🚀 Installation
 
-### 🖥️ AI Virtual Assistant
+### 1. Clone the repository
 
-![AI Virtual Assistant](screenshots/Screenshot%202026-08-10%20001847.png)
+```bash
+git clone https://github.com/Samrat2414/AI-Virtual-Assistant.git
+cd AI-Virtual-Assistant
+```
 
-### 🖥️ Assistant Interface
+### 2. Install dependencies
 
-![Assistant Interface](screenshots/Screenshot%202026-08-10%20001944.png)
+```bash
+py -3.13 -m pip install -r requirements.txt
+```
+
+### 3. Run the application
+
+```bash
+py -3.13 main.py
+```
+
+## 🎤 Voice Features
+
+The assistant can use the microphone for voice commands through SpeechRecognition and PyAudio.
+
+## 🔊 Voice Output
+
+Text-to-speech functionality is provided using pyttsx3.
+
+## 📌 Project Status
+
+**Completed and working.**
+
+The project is actively maintained and can be extended with additional AI, automation, and voice-assistant features.
 
 ## 📄 License
 
 This project is licensed under the MIT License.
 
-See the `LICENSE` file for details.
-
 ## 👨‍💻 Author
 
 **Sahariyar Chowdhury**
 
-GitHub: https://github.com/Samrat2414
-
----
-
-⭐ If you like this project, consider giving it a star on GitHub!
+GitHub: [Samrat2414](https://github.com/Samrat2414)
